@@ -1,0 +1,5527 @@
+openapi: 3.0.4
+info:
+  title: Delinea API
+  termsOfService: https://www.delinea.com/tos
+  contact:
+    name: Delinea
+    url: https://www.delinea.com
+  version: '1.0'
+paths:
+  /api/Command/search:
+    post:
+      tags:
+        - Command
+      summary: >-
+        Gets paginated commands
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated commands
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: The filtering/pagination model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCommandsResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandsResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandsResultGetDataView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Command/{id}:
+    get:
+      tags:
+        - Command
+      summary: Gets single command entity with details
+      description: Gets single command entity with details
+      parameters:
+        - name: id
+          in: path
+          description: The command library id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCommandByIdResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandByIdResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandByIdResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    put:
+      tags:
+        - Command
+      summary: Updates existing command.
+      description: Updates existing command.
+      parameters:
+        - name: id
+          in: path
+          description: Command id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommandModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommandModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommandModel'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    delete:
+      tags:
+        - Command
+      summary: Deletes existing command.
+      description: Deletes existing command.
+      parameters:
+        - name: id
+          in: path
+          description: Command id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Command/MatchPathTypes:
+    get:
+      tags:
+        - Command
+      summary: Gets available MatchPath types commands.
+      description: Gets available MatchPath types commands.
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCommandMatchPathTypesResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandMatchPathTypesResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandMatchPathTypesResultGetDataView'
+  /api/Command/RunAsTypes:
+    get:
+      tags:
+        - Command
+      summary: Gets available RunAs types for commands.
+      description: Gets available RunAs types for commands.
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCommandRunAsTypesResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandRunAsTypesResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandRunAsTypesResultGetDataView'
+  /api/Command:
+    post:
+      tags:
+        - Command
+      summary: Creates new command.
+      description: Creates new command.
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandModel'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Command/bulk:
+    delete:
+      tags:
+        - Command
+      summary: Deletes commands in bulk
+      description: Deletes commands in bulk
+      operationId: DeleteCommands
+      parameters:
+        - name: ids
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/CommandGroup/search:
+    post:
+      tags:
+        - CommandGroup
+      summary: >-
+        Gets paginated command groups
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated command groups
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: The filtering/pagination model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCommandGroupsResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandGroupsResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandGroupsResultGetDataView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/CommandGroup:
+    post:
+      tags:
+        - CommandGroup
+      summary: Creates new command group.
+      description: Creates new command group.
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandGroupModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandGroupModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandGroupModel'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/CommandGroup/{id}:
+    put:
+      tags:
+        - CommandGroup
+      summary: Updates existing command group.
+      description: Updates existing command group.
+      parameters:
+        - name: id
+          in: path
+          description: CommandGroup id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandGroupModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandGroupModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateCommandGroupModel'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    get:
+      tags:
+        - CommandGroup
+      summary: Get single command group details (including commands that it contains)
+      description: Get single command group details (including commands that it contains)
+      parameters:
+        - name: id
+          in: path
+          description: CommandGroup id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCommandGroupByIdResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandGroupByIdResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandGroupByIdResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    delete:
+      tags:
+        - CommandGroup
+      summary: Deletes existing command group.
+      description: Deletes existing command group.
+      parameters:
+        - name: id
+          in: path
+          description: Command group id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/CommandLibrary/list:
+    get:
+      tags:
+        - CommandLibrary
+      summary: >-
+        Gets paginated command library
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated command library
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCommandLibrariesResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandLibrariesResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandLibrariesResultGetDataView'
+  /api/CommandLibrary/{id}:
+    get:
+      tags:
+        - CommandLibrary
+      summary: Gets single command library entity with details
+      description: Gets single command library entity with details
+      parameters:
+        - name: id
+          in: path
+          description: The command library id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCommandLibraryByIdResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandLibraryByIdResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCommandLibraryByIdResultGetDataView'
+  /api/ConditionLibrary/list:
+    get:
+      tags:
+        - ConditionLibrary
+      summary: >-
+        Gets paginated condition library. Submits the query to the queue and
+        returns an OperationId.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated condition library. Submits the query to the queue and
+        returns an OperationId.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetConditionLibraryResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConditionLibraryResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetConditionLibraryResultGetDataView'
+  /api/Policy/search:
+    post:
+      tags:
+        - Policy
+      summary: >-
+        Gets paginated policies.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated policies.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: The filtering/pagination model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SieveModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesResultGetDataView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/command-filters:
+    get:
+      tags:
+        - Policy
+      summary: >-
+        Gets available command filter values for policies.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets available command filter values for policies.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPolicyCommandFiltersResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyCommandFiltersResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyCommandFiltersResultGetDataView'
+  /api/Policy/commandGroup-filters:
+    get:
+      tags:
+        - Policy
+      summary: >-
+        Gets available command group filter values for policies.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets available command group filter values for policies.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: >-
+                  #/components/schemas/GetPolicyCommandGroupFiltersResultGetDataView
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/GetPolicyCommandGroupFiltersResultGetDataView
+            text/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/GetPolicyCommandGroupFiltersResultGetDataView
+  /api/Policy/filters:
+    get:
+      tags:
+        - Policy
+      summary: Gets available filter values for policies.
+      description: Gets available filter values for policies.
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesFiltersResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesFiltersResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesFiltersResultGetDataView'
+  /api/Policy/{id}:
+    get:
+      tags:
+        - Policy
+      summary: >-
+        Gets single policy with details. Submits the query to the queue and
+        returns an OperationId.
+      description: >-
+        Gets single policy with details. Submits the query to the queue and
+        returns an OperationId.
+      parameters:
+        - name: id
+          in: path
+          description: The policy id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPolicyByIdResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyByIdResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyByIdResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{id}/withRelations:
+    get:
+      tags:
+        - Policy
+      summary: >-
+        Gets single policy with details and relations. Submits the query to the
+        queue and returns an OperationId.
+      description: >-
+        Gets single policy with details and relations. Submits the query to the
+        queue and returns an OperationId.
+      parameters:
+        - name: id
+          in: path
+          description: The policy id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPolicyByIdResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyByIdResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyByIdResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy:
+    post:
+      tags:
+        - Policy
+      summary: Creates new policy.
+      description: Creates new policy.
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: Policy payload
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyCreatedPayload'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PolicyCreatedPayload'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PolicyCreatedPayload'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{policyId}/enable:
+    post:
+      tags:
+        - Policy
+      summary: Enables policy.
+      description: Enables policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: Policy id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{policyId}/disable:
+    post:
+      tags:
+        - Policy
+      summary: Disables policy.
+      description: Disables policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: Policy id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{policyId}:
+    delete:
+      tags:
+        - Policy
+      summary: Deletes policy.
+      description: Deletes policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: Policy id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    put:
+      tags:
+        - Policy
+      summary: Updates policy.
+      description: Updates policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: Policy id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: Edit policy model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditPolicy'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/EditPolicy'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/EditPolicy'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{policyId}/redeploy:
+    post:
+      tags:
+        - Policy
+      summary: Redeploy policy.
+      description: Redeploy policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: Policy id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/PolicyEvaluation/ValidateRego:
+    post:
+      tags:
+        - PolicyEvaluation
+      summary: ''
+      description: ''
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: The Rego file contents
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal Server Error
+  /api/PolicyEvaluation/EvaluatePolicy:
+    post:
+      tags:
+        - PolicyEvaluation
+      summary: ''
+      description: ''
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluatePolicyRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/EvaluatePolicyRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/EvaluatePolicyRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/EvaluatePolicyResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluatePolicyResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/EvaluatePolicyResult'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal Server Error
+  /api/PolicyEvent/updates:
+    get:
+      tags:
+        - PolicyEvent
+      summary: >-
+        Gets paginated policy events, that are newer than the specified date.
+        Submits the query to the queue and returns an OperationId.
+      description: >-
+        Gets paginated policy events, that are newer than the specified date.
+        Submits the query to the queue and returns an OperationId.
+      parameters:
+        - name: LastUpdateDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: PageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPolicyEventUpdatesResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyEventUpdatesResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyEventUpdatesResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/PolicyEvent/list:
+    get:
+      tags:
+        - PolicyEvent
+      summary: >-
+        Gets paginated policy events. Submits the query to the queue and returns
+        an OperationId.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated policy events. Submits the query to the queue and returns
+        an OperationId.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPolicyEventsResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyEventsResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyEventsResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/PolicyLibrary/list:
+    get:
+      tags:
+        - PolicyLibrary
+      summary: >-
+        Gets paginated policy library. Submits the query to the queue and
+        returns an OperationId.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated policy library. Submits the query to the queue and
+        returns an OperationId.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPolicyLibraryResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyLibraryResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyLibraryResultGetDataView'
+  /api/PolicyLibrary/{id}:
+    get:
+      tags:
+        - PolicyLibrary
+      summary: >-
+        Gets single policy library entity with details. Submits the query to the
+        queue and returns an OperationId.
+      description: >-
+        Gets single policy library entity with details. Submits the query to the
+        queue and returns an OperationId.
+      parameters:
+        - name: id
+          in: path
+          description: The policy library id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPolicyLibraryByIdResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyLibraryByIdResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPolicyLibraryByIdResultGetDataView'
+  /api/RuleLibrary/list:
+    get:
+      tags:
+        - RuleLibrary
+      summary: >-
+        Gets paginated rule library. Submits the query to the queue and returns
+        an OperationId.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated rule library. Submits the query to the queue and returns
+        an OperationId.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetRuleLibraryResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRuleLibraryResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetRuleLibraryResultGetDataView'
+  /api/Seeding/migrate:
+    post:
+      tags:
+        - Seeding
+      summary: Migrates tenant to the latest version
+      description: Migrates tenant to the latest version
+      parameters:
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+  /api/Status/{operationId}:
+    get:
+      tags:
+        - Status
+      summary: Gets the result for the OperationId.
+      description: Gets the result for the OperationId.
+      parameters:
+        - name: operationId
+          in: path
+          description: >-
+            The Operation Id received after calling the corresponding resource
+            endpoint.
+          required: true
+          schema:
+            type: string
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ObjectGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ObjectGetDataView'
+        '404':
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/Subject/{subjectId}/policies:
+    get:
+      tags:
+        - Subject
+      summary: >-
+        Gets paginated policies, that are assigned to this subject.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      description: >-
+        Gets paginated policies, that are assigned to this subject.
+
+        Use https://github.com/Biarity/Sieve#send-a-request to
+        filter/paginate/sort
+      parameters:
+        - name: subjectId
+          in: path
+          description: Subject id
+          required: true
+          schema:
+            type: string
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{policyId}/subject/user:
+    post:
+      tags:
+        - Subject
+      summary: Adds subject user to the existing policy.
+      description: Adds subject user to the existing policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectUsersAddedPayload'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SubjectUsersAddedPayload'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SubjectUsersAddedPayload'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+    delete:
+      tags:
+        - Subject
+      summary: Removes subject user from the existing policy.
+      description: Removes subject user from the existing policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: SubjectIds
+          in: query
+          description: Subject Ids
+          required: true
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+              format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+  /api/Policy/{policyId}/subject/group:
+    post:
+      tags:
+        - Subject
+      summary: Adds subject group to the existing policy.
+      description: Adds subject group to the existing policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectGroupsAddedPayload'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SubjectGroupsAddedPayload'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SubjectGroupsAddedPayload'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+    delete:
+      tags:
+        - Subject
+      summary: Removes subject group from the existing policy.
+      description: Removes subject group from the existing policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: SubjectIds
+          in: query
+          description: Subject Ids
+          required: true
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+              format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+  /api/Subject/direct:
+    get:
+      tags:
+        - Subject
+      summary: Gets subjects with related policies
+      description: Gets subjects with related policies
+      parameters:
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: includePolicies
+          in: query
+          description: ''
+          schema:
+            type: boolean
+        - name: policyLibraryIds
+          in: query
+          description: ''
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+        - name: targetIds
+          in: query
+          description: ''
+          schema:
+            type: array
+            items:
+              type: string
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetDirectSubjectsResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDirectSubjectsResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetDirectSubjectsResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{policyId}/target/instance:
+    post:
+      tags:
+        - Target
+      summary: Adds target instance to the existing policy.
+      description: Adds target instance to the existing policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TargetInstancesAddedPayload'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/TargetInstancesAddedPayload'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/TargetInstancesAddedPayload'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    delete:
+      tags:
+        - Target
+      summary: Removes target instance from the existing policy.
+      description: Removes target instance from the existing policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: TargetIds
+          in: query
+          description: Target Id
+          required: true
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{policyId}/target/group:
+    post:
+      tags:
+        - Target
+      summary: Adds target group to the existing policy.
+      description: Adds target group to the existing policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TargetGroupsAddedPayload'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/TargetGroupsAddedPayload'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/TargetGroupsAddedPayload'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    delete:
+      tags:
+        - Target
+      summary: Removes target group from the existing policy.
+      description: Removes target group from the existing policy.
+      parameters:
+        - name: policyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: TargetIds
+          in: query
+          description: Target Id
+          required: true
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '202':
+          description: Accepted
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartRequestProcessingView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/Policy/{policyId}/target:
+    get:
+      tags:
+        - Target
+      summary: Gets target assignments for a specific policy.
+      description: Gets target assignments for a specific policy.
+      operationId: GetTargetsForPolicy
+      parameters:
+        - name: policyId
+          in: path
+          description: The unique identifier of the policy.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Filters
+          in: query
+          schema:
+            type: string
+        - name: Sorts
+          in: query
+          schema:
+            type: string
+        - name: Page
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 1
+            type: integer
+            format: int32
+        - name: includeCollections
+          in: query
+          description: Indicates whether to include collections in the results.
+          schema:
+            type: boolean
+            default: false
+        - name: api-version
+          in: query
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-Api-Version
+          in: header
+          description: The requested API version
+          schema:
+            type: string
+            default: '1.0'
+        - name: X-MT-SecondaryId
+          in: header
+          description: Tenant Secondary ID
+          schema:
+            type: string
+          example: 00000000-1337-0000-0000-000000000000
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetTargetsForPolicyResultGetDataView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTargetsForPolicyResultGetDataView'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetTargetsForPolicyResultGetDataView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+components:
+  schemas:
+    ActionOption:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          nullable: true
+        type:
+          $ref: '#/components/schemas/ActionType'
+        displayName:
+          type: string
+          description: Display name
+          nullable: true
+      additionalProperties: false
+      description: Action option
+    ActionSectionConfiguration:
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+        minItems:
+          type: integer
+          description: Minimum amount of items, that must be selected
+          format: int32
+          nullable: true
+        maxItems:
+          type: integer
+          description: Maximum amount of items, that must be selected
+          format: int32
+          nullable: true
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionOption'
+          description: Options
+          nullable: true
+        areExtraOptionsAllowed:
+          type: boolean
+          description: >-
+            Whether extra options are allowed or not.
+
+            If true - all options, that aren't specified as forbidden are
+            allowed.
+
+            If false - only specified options are allowed.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValuesSectionData'
+          description: Default values
+          nullable: true
+      additionalProperties: false
+      description: Action section configuration
+    ActionType:
+      enum:
+        - ResourceAction
+        - DataAction
+      type: string
+      description: Action type
+    AuditSectionData:
+      type: object
+      properties:
+        createdByUserId:
+          type: string
+          description: Created by (UserId)
+          nullable: true
+        createdByUsername:
+          type: string
+          description: Created by (Username)
+          nullable: true
+        createdAt:
+          type: string
+          description: Created at (Date).
+          format: date-time
+          nullable: true
+        modifiedByUserId:
+          type: string
+          description: Modified by (UserId)
+          nullable: true
+        modifiedByUsername:
+          type: string
+          description: Modified by (Username)
+          nullable: true
+        modifiedType:
+          type: string
+          description: Modification type
+          nullable: true
+        modifiedAt:
+          type: string
+          description: Modified at (Date).
+          format: date-time
+          nullable: true
+        statusChangedByUserId:
+          type: string
+          description: Status changed by (UserId)
+          nullable: true
+        statusChangedByUsername:
+          type: string
+          description: Status changed by (Username)
+          nullable: true
+        statusChangedAt:
+          type: string
+          description: Status changed at (Date).
+          format: date-time
+          nullable: true
+      additionalProperties: false
+      description: Policy audit section. E.g. created by, last modified by etc.
+    Command:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        name:
+          type: string
+          description: Name
+          nullable: true
+        description:
+          type: string
+          description: Description
+          nullable: true
+        operatingSystem:
+          $ref: '#/components/schemas/OperatingSystem'
+        expressionType:
+          $ref: '#/components/schemas/ExpressionType'
+        matchPathType:
+          $ref: '#/components/schemas/CommandMatchPath'
+        matchPaths:
+          type: array
+          items:
+            type: string
+          description: Match paths custom user value
+          nullable: true
+        owner:
+          $ref: '#/components/schemas/Owner'
+        featureFlag:
+          type: string
+          description: >-
+            Feature flag, that decides if this granular command should be
+            enabled or not
+          nullable: true
+        libraryId:
+          type: string
+          description: Id of the built-in command, that was used to create this command.
+          format: uuid
+          nullable: true
+        libraryName:
+          type: string
+          description: Name of the built-in command, that was used to create this command.
+          nullable: true
+        commandText:
+          type: string
+          description: Command text
+          nullable: true
+        runAsType:
+          $ref: '#/components/schemas/CommandRunAs'
+        runAs:
+          type: string
+          description: Run as custom user value
+          nullable: true
+        application:
+          type: string
+          description: Application
+          nullable: true
+        argument:
+          type: string
+          description: Argument
+          nullable: true
+        createdByIdentityName:
+          type: string
+          description: Created by (Username)
+          nullable: true
+        created:
+          type: string
+          description: Created at (Date).
+          format: date-time
+          nullable: true
+        updatedByIdentityName:
+          type: string
+          description: Modified by (Username)
+          nullable: true
+        updated:
+          type: string
+          description: Modified at (Date).
+          format: date-time
+          nullable: true
+      additionalProperties: false
+      description: User command
+    CommandGroupDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        name:
+          type: string
+          description: Name
+          nullable: true
+        description:
+          type: string
+          description: Description
+          nullable: true
+        createdByIdentityName:
+          type: string
+          description: Created by (Username)
+          nullable: true
+        created:
+          type: string
+          description: Created at (Date).
+          format: date-time
+          nullable: true
+        updatedByIdentityName:
+          type: string
+          description: Modified by (Username)
+          nullable: true
+        updated:
+          type: string
+          description: Modified at (Date).
+          format: date-time
+          nullable: true
+      additionalProperties: false
+      description: Group of user commands
+    CommandGroupListDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        name:
+          type: string
+          description: Name
+          nullable: true
+        description:
+          type: string
+          description: Description
+          nullable: true
+        createdByIdentityName:
+          type: string
+          description: Created by (Username)
+          nullable: true
+        created:
+          type: string
+          description: Created at (Date).
+          format: date-time
+          nullable: true
+        updatedByIdentityName:
+          type: string
+          description: Modified by (Username)
+          nullable: true
+        updated:
+          type: string
+          description: Modified at (Date).
+          format: date-time
+          nullable: true
+        commandsCount:
+          type: integer
+          description: Count of commands in this group
+          format: int32
+        policiesCount:
+          type: integer
+          description: Count of policies this group is applied to
+          format: int32
+      additionalProperties: false
+      description: Group of user commands with commands count
+    CommandLibrary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        name:
+          type: string
+          description: Name
+          nullable: true
+        description:
+          type: string
+          description: Description
+          nullable: true
+        operatingSystem:
+          $ref: '#/components/schemas/OperatingSystem'
+        commandText:
+          type: string
+          description: Command text
+          nullable: true
+        expressionType:
+          $ref: '#/components/schemas/ExpressionType'
+        matchPathType:
+          $ref: '#/components/schemas/CommandMatchPath'
+        matchPaths:
+          type: array
+          items:
+            type: string
+          description: Match paths custom user value
+          nullable: true
+        runAsType:
+          $ref: '#/components/schemas/CommandRunAs'
+        runAs:
+          type: string
+          description: Run as custom user value
+          nullable: true
+        owner:
+          $ref: '#/components/schemas/Owner'
+        isAutoAssigned:
+          type: boolean
+          description: >-
+            Specifies whether a command should be automatically created based on
+            this template
+
+            when a new tenant is created
+        application:
+          type: string
+          description: Application
+          nullable: true
+        argument:
+          type: string
+          description: Argument
+          nullable: true
+      additionalProperties: false
+      description: Command library for built-in commands (templates)
+    CommandMatchPath:
+      enum:
+        - StandardSystem
+        - SpecifyMatch
+        - StandardUser
+        - SystemSearch
+      type: string
+      description: Match path type
+    CommandRunAs:
+      enum:
+        - Root
+        - SpecifyUser
+        - SpecifyGroup
+        - LocalUser
+        - LocalGroup
+        - ActiveDirectoryUser
+        - ActiveDirectoryGroup
+      type: string
+      description: Run as type
+    ConditionCategory:
+      enum:
+        - General
+        - Connectivity
+        - DateTime
+        - GranularCommand
+      type: string
+      description: Condition category
+    ConditionLibrary:
+      required:
+        - externalId
+        - id
+        - jsonSchema
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          format: uuid
+        externalId:
+          minLength: 1
+          type: string
+          description: Id, that can be used to map db record to wasm in blob
+        content:
+          type: string
+          description: Rego content of the library
+          nullable: true
+        jsonSchema:
+          minLength: 1
+          type: string
+          description: Json schema of data, that is required for rego
+        name:
+          minLength: 1
+          type: string
+          description: Name
+        description:
+          type: string
+          description: Description
+          nullable: true
+        labels:
+          type: array
+          items:
+            type: string
+          description: Labels/categories of this library. E.g. SOC 2, Delinea etc.
+          nullable: true
+        deleted:
+          type: string
+          description: Deletion date.
+          format: date-time
+          nullable: true
+        level:
+          $ref: '#/components/schemas/Owner'
+        isExclusive:
+          type: boolean
+          description: >-
+            Determines if this condition is exclusive.
+
+            If it is selected, no other conditions can be selected for the
+            policy.
+        category:
+          $ref: '#/components/schemas/ConditionCategory'
+      additionalProperties: false
+      description: Condition library
+    ConditionObject:
+      required:
+        - regoLibraryId
+      type: object
+      properties:
+        regoLibraryId:
+          type: string
+          description: Rego library id
+          format: uuid
+        data:
+          type: string
+          description: >-
+            Serialized json data, entered by user during policy creation, that
+            should be passed to OPA engine
+          nullable: true
+        regoLibrary:
+          $ref: '#/components/schemas/ConditionLibrary'
+      additionalProperties: false
+      description: OPA condition reference with data
+    ConditionOption:
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/ConditionCategory'
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+      additionalProperties: false
+      description: Condition option
+    ConditionSectionConfiguration:
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+        minItems:
+          type: integer
+          description: Minimum amount of items, that must be selected
+          format: int32
+          nullable: true
+        maxItems:
+          type: integer
+          description: Maximum amount of items, that must be selected
+          format: int32
+          nullable: true
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionOption'
+          description: Options
+          nullable: true
+        areExtraOptionsAllowed:
+          type: boolean
+          description: >-
+            Whether extra options are allowed or not.
+
+            If true - all options, that aren't specified as forbidden are
+            allowed.
+
+            If false - only specified options are allowed.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValuesSectionData'
+          description: Default values
+          nullable: true
+      additionalProperties: false
+      description: Condition section configuration
+    CreateCommandGroupModel:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        commandIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+      additionalProperties: false
+      description: Creates a new user command group
+    CreateCommandModel:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        operatingSystem:
+          $ref: '#/components/schemas/OperatingSystem'
+        expressionType:
+          $ref: '#/components/schemas/ExpressionType'
+        matchPathType:
+          $ref: '#/components/schemas/CommandMatchPath'
+        matchPaths:
+          type: array
+          items:
+            type: string
+          nullable: true
+        runAsType:
+          $ref: '#/components/schemas/CommandRunAs'
+        runAs:
+          type: string
+          nullable: true
+        application:
+          type: string
+          nullable: true
+        argument:
+          type: string
+          nullable: true
+        libraryId:
+          type: string
+          format: uuid
+          nullable: true
+        groups:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+      additionalProperties: false
+      description: >-
+        Creates a new user command that can be added to the group later which
+        allows it to be used in a policy
+    DeploymentError:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the deployment error
+          nullable: true
+        category:
+          type: string
+          description: Category of the deployment error
+          nullable: true
+        details:
+          type: string
+          description: Deployment error details
+          nullable: true
+        domain:
+          type: string
+          description: Deployment error domain
+          nullable: true
+      additionalProperties: false
+      description: Deployment Error
+    EditPolicy:
+      required:
+        - name
+        - rego
+        - subject
+        - target
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: Name
+        description:
+          type: string
+          description: Description
+          nullable: true
+        status:
+          $ref: '#/components/schemas/PolicyStatus'
+        labels:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: Labels/categories of this policy. E.g. SOC 2, Delinea etc.
+          nullable: true
+        rego:
+          $ref: '#/components/schemas/RegoSectionData'
+        subject:
+          $ref: '#/components/schemas/SubjectSectionData'
+        target:
+          $ref: '#/components/schemas/TargetSectionData'
+        subjects:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: List of Subjects referenced by their Delinea Resource Name
+          nullable: true
+        targets:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: List of Targets referenced by their Delinea Resource Name
+          nullable: true
+      additionalProperties: false
+      description: Edit policy model
+    EvaluatePolicyDecision:
+      type: object
+      properties:
+        allow:
+          type: boolean
+          nullable: true
+        applicable:
+          type: boolean
+          nullable: true
+        remediation_tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatePolicyDecisionRemediationTask'
+          nullable: true
+        failed:
+          type: array
+          items:
+            type: string
+          nullable: true
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatePolicyDecisionRule'
+          nullable: true
+      additionalProperties: false
+      description: Result data from Opa Evaluation
+    EvaluatePolicyDecisionRemediationTask:
+      type: object
+      properties:
+        source:
+          type: string
+          description: ''
+          nullable: true
+        taskIds:
+          type: array
+          items:
+            type: string
+          description: ''
+          nullable: true
+      additionalProperties: false
+      description: ''
+    EvaluatePolicyDecisionRule:
+      type: object
+      properties:
+        source:
+          type: string
+          nullable: true
+        rules:
+          type: array
+          items: {}
+          nullable: true
+      additionalProperties: false
+      description: ''
+    EvaluatePolicyRequest:
+      type: object
+      properties:
+        action:
+          type: string
+          nullable: true
+        subjectId:
+          type: string
+          nullable: true
+        targetId:
+          type: string
+          nullable: true
+        localTimezoneOffsetInMinutes:
+          type: integer
+          format: int32
+        command:
+          type: string
+          nullable: true
+        subject:
+          type: string
+          nullable: true
+        target:
+          type: string
+          nullable: true
+      additionalProperties: false
+      description: Request contents expected by EvaluatePolicy endpoint
+    EvaluatePolicyResult:
+      type: object
+      properties:
+        allow:
+          type: boolean
+          nullable: true
+        applicable:
+          type: boolean
+          nullable: true
+        remediationTasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatePolicyDecisionRemediationTask'
+          nullable: true
+        failed:
+          type: array
+          items:
+            type: string
+          nullable: true
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatePolicyDecisionRule'
+          nullable: true
+        evaluatePolicyResultDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatePolicyResultDetails'
+          nullable: true
+      additionalProperties: false
+      description: ''
+    EvaluatePolicyResultDetails:
+      type: object
+      properties:
+        policy:
+          $ref: '#/components/schemas/PolicyIdSubjectActionTarget'
+        decision:
+          $ref: '#/components/schemas/EvaluatePolicyDecision'
+      additionalProperties: false
+      description: ''
+    ExpressionType:
+      enum:
+        - Glob
+        - Regex
+      type: string
+      description: Expression type
+    FilterItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        name:
+          type: string
+          description: Name
+          nullable: true
+        type:
+          type: string
+          description: Type
+          nullable: true
+        jsonSchema:
+          type: string
+          description: Json Schema
+          nullable: true
+      additionalProperties: false
+      description: Record to return policies filter items to front end
+    GetCommandByIdResult:
+      type: object
+      properties:
+        command:
+          $ref: '#/components/schemas/Command'
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Groups that this command belongs to
+          nullable: true
+      additionalProperties: false
+      description: Result with detailed command info
+    GetCommandByIdResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetCommandByIdResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetCommandGroupByIdResult:
+      type: object
+      properties:
+        commandGroup:
+          $ref: '#/components/schemas/CommandGroupDto'
+        policyIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Polcies that this CommandGroup assigned to
+          nullable: true
+        commandIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Commands that are in this group
+          nullable: true
+      additionalProperties: false
+      description: >-
+        Result with detailed command group info (including commands that it
+        contains)
+    GetCommandGroupByIdResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetCommandGroupByIdResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetCommandGroupsResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommandGroupListDto'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with command group list
+    GetCommandGroupsResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetCommandGroupsResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetCommandLibrariesResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommandLibrary'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with command library list
+    GetCommandLibrariesResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetCommandLibrariesResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetCommandLibraryByIdResult:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        name:
+          type: string
+          description: Name
+          nullable: true
+        description:
+          type: string
+          description: Description
+          nullable: true
+        operatingSystem:
+          $ref: '#/components/schemas/OperatingSystem'
+        commandText:
+          type: string
+          description: Command text
+          nullable: true
+        expressionType:
+          $ref: '#/components/schemas/ExpressionType'
+        matchPathType:
+          $ref: '#/components/schemas/CommandMatchPath'
+        matchPaths:
+          type: array
+          items:
+            type: string
+          description: Match paths custom user value
+          nullable: true
+        runAsType:
+          $ref: '#/components/schemas/CommandRunAs'
+        runAs:
+          type: string
+          description: Run as custom user value
+          nullable: true
+        owner:
+          $ref: '#/components/schemas/Owner'
+        isAutoAssigned:
+          type: boolean
+          description: >-
+            Specifies whether a command should be automatically created based on
+            this template
+
+            when a new tenant is created
+        application:
+          type: string
+          description: Application
+          nullable: true
+        argument:
+          type: string
+          description: Argument
+          nullable: true
+        commandName:
+          type: string
+          description: Default name for the command based on the CommandLibrary name
+          nullable: true
+      additionalProperties: false
+      description: Result with detailed command library
+    GetCommandLibraryByIdResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetCommandLibraryByIdResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetCommandMatchPathTypesResult:
+      type: object
+      properties:
+        windowsMatchPaths:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommandMatchPath'
+          description: Command Match Path types for Windows
+          nullable: true
+        linuxMatchPaths:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommandMatchPath'
+          description: Command Match Path types for Linux
+          nullable: true
+      additionalProperties: false
+      description: Result Command Match Path Types list
+    GetCommandMatchPathTypesResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetCommandMatchPathTypesResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetCommandRunAsTypesResult:
+      type: object
+      properties:
+        windowsOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommandRunAs'
+          nullable: true
+        linuxOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommandRunAs'
+          nullable: true
+      additionalProperties: false
+      description: Result Command Run As Types list
+    GetCommandRunAsTypesResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetCommandRunAsTypesResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetCommandsResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Command'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with command list
+    GetCommandsResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetCommandsResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetConditionLibraryResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionLibrary'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with condition library
+    GetConditionLibraryResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetConditionLibraryResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetDirectSubjectsResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubjectWithPolicies'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with subjects and related policies
+    GetDirectSubjectsResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetDirectSubjectsResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPoliciesFiltersResult:
+      type: object
+      properties:
+        policyLibrary:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterItem'
+          nullable: true
+        regoLibrary:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterItem'
+          nullable: true
+        subjectGroups:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        subjectUsers:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        targetGroups:
+          type: array
+          items:
+            type: string
+          nullable: true
+        targetInstances:
+          type: array
+          items:
+            type: string
+          nullable: true
+        policyStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyStatus'
+          nullable: true
+        policyDeploymentStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyDeploymentState'
+          nullable: true
+      additionalProperties: false
+      description: Result with available policies filters values
+    GetPoliciesFiltersResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPoliciesFiltersResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPoliciesResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with policies
+    GetPoliciesResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPoliciesResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPolicyByIdResult:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        libraryId:
+          type: string
+          description: Policy library id, that was used to create current policy
+          format: uuid
+        libraryName:
+          type: string
+          description: Policy library name, that was used to create current policy
+          nullable: true
+        library:
+          $ref: '#/components/schemas/PolicyLibrary'
+        name:
+          type: string
+          description: Name
+          nullable: true
+        description:
+          type: string
+          description: Description
+          nullable: true
+        status:
+          $ref: '#/components/schemas/PolicyStatus'
+        level:
+          $ref: '#/components/schemas/Owner'
+        deploymentState:
+          $ref: '#/components/schemas/PolicyDeploymentState'
+        deploymentErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentError'
+          description: Deployment errors
+          nullable: true
+        errorsByDomains:
+          type: object
+          additionalProperties:
+            type: string
+          description: Errors by domains
+          nullable: true
+        subject:
+          $ref: '#/components/schemas/SubjectSectionData'
+        target:
+          $ref: '#/components/schemas/TargetSectionData'
+        subjects:
+          type: array
+          items:
+            type: string
+          description: List of Subjects referenced by their Delinea Resource Name
+          nullable: true
+        targets:
+          type: array
+          items:
+            type: string
+          description: List of Targets referenced by their Delinea Resource Name
+          nullable: true
+        rego:
+          $ref: '#/components/schemas/RegoSectionData'
+        updated:
+          type: string
+          description: Updated date.
+          format: date-time
+          nullable: true
+        deleted:
+          type: string
+          description: Deletion date.
+          format: date-time
+          nullable: true
+        audit:
+          $ref: '#/components/schemas/AuditSectionData'
+      additionalProperties: false
+      description: Result with detailed policy
+    GetPolicyByIdResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPolicyByIdResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPolicyCommandFiltersResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Command'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with available policy commands for filtering
+    GetPolicyCommandFiltersResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPolicyCommandFiltersResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPolicyCommandGroupFiltersResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommandGroupDto'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with available policy command groups for filtering
+    GetPolicyCommandGroupFiltersResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPolicyCommandGroupFiltersResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPolicyEventUpdatesResult:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvent'
+          description: Events
+          nullable: true
+        continuationLastUpdateDate:
+          type: string
+          description: |-
+            Null if paginated result returned all new events.
+                        Otherwise - the LastUpdateDate, that has to be passed GetPolicyEventsQuery to retrieve the next page of events
+          format: date-time
+          nullable: true
+      additionalProperties: false
+      description: Result with new policy events
+    GetPolicyEventUpdatesResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPolicyEventUpdatesResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPolicyEventsResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvent'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with policy events
+    GetPolicyEventsResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPolicyEventsResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPolicyLibraryByIdResult:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        actionId:
+          type: string
+          description: Type of action, that can be used in the policy
+          nullable: true
+        name:
+          type: string
+          description: Name
+          nullable: true
+        description:
+          type: string
+          description: Description
+          nullable: true
+        labels:
+          type: array
+          items:
+            type: string
+          description: Labels
+          nullable: true
+        sectionConfiguration:
+          $ref: '#/components/schemas/PolicyLibrarySectionConfiguration'
+      additionalProperties: false
+      description: Result with detailed policy library
+    GetPolicyLibraryByIdResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPolicyLibraryByIdResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetPolicyLibraryResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyLibrary'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with policy library
+    GetPolicyLibraryResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetPolicyLibraryResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetRuleLibraryResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleLibrary'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with rule library
+    GetRuleLibraryResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetRuleLibraryResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    GetTargetsForPolicyResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instance'
+          nullable: true
+        totalCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Result with instances of not enforced policy targets
+    GetTargetsForPolicyResultGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          $ref: '#/components/schemas/GetTargetsForPolicyResult'
+      additionalProperties: false
+      description: Result of the request execution with data
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ''
+          nullable: true
+        name:
+          type: string
+          description: ''
+          nullable: true
+        type:
+          type: string
+          description: ''
+          nullable: true
+        inventoryId:
+          type: string
+          description: Id inside inventory DB
+          format: uuid
+          nullable: true
+        status:
+          $ref: '#/components/schemas/TargetStatus'
+        notEnforcedReason:
+          type: string
+          description: Reason of why Target is not enforced
+          nullable: true
+      additionalProperties: false
+      description: Policy target group Dto
+    IdentityInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identity id
+          nullable: true
+        name:
+          type: string
+          description: Identity name
+          nullable: true
+        cltIpAddr:
+          type: string
+          description: Identity Client Ip Addres
+          nullable: true
+      additionalProperties: false
+      description: Identity info
+    Instance:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ''
+          nullable: true
+        name:
+          type: string
+          description: ''
+          nullable: true
+        type:
+          type: string
+          description: ''
+          nullable: true
+        inventoryId:
+          type: string
+          description: Id inside inventory DB
+          format: uuid
+          nullable: true
+        status:
+          $ref: '#/components/schemas/TargetStatus'
+        notEnforcedReason:
+          type: string
+          description: Reason of why Target is not enforced
+          nullable: true
+        domain:
+          type: string
+          description: ''
+          nullable: true
+        operatingSystemType:
+          type: string
+          description: ''
+          nullable: true
+        operatingSystemName:
+          type: string
+          description: ''
+          nullable: true
+        externalId:
+          type: string
+          description: ''
+          nullable: true
+        targetSource:
+          type: array
+          items:
+            $ref: '#/components/schemas/Target'
+          description: Target Sources (Collection(s) or individually selected in policy)
+          nullable: true
+      additionalProperties: false
+      description: Policy target instance Dto
+    ObjectGetDataView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ''
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+        executionTime:
+          type: string
+          description: ''
+          format: date-span
+          nullable: true
+        data:
+          description: ''
+          nullable: true
+      additionalProperties: false
+      description: Result of the request execution with data
+    OperatingSystem:
+      enum:
+        - Linux
+        - Windows
+      type: string
+      description: Operating system
+    Owner:
+      enum:
+        - User
+        - Platform
+      type: string
+      description: Owner
+    Policy:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        libraryId:
+          type: string
+          description: Policy library id, that was used to create current policy
+          format: uuid
+        libraryName:
+          type: string
+          description: Policy library name, that was used to create current policy
+          nullable: true
+        library:
+          $ref: '#/components/schemas/PolicyLibrary'
+        name:
+          type: string
+          description: Name
+          nullable: true
+        description:
+          type: string
+          description: Description
+          nullable: true
+        status:
+          $ref: '#/components/schemas/PolicyStatus'
+        level:
+          $ref: '#/components/schemas/Owner'
+        deploymentState:
+          $ref: '#/components/schemas/PolicyDeploymentState'
+        deploymentErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentError'
+          description: Deployment errors
+          nullable: true
+        errorsByDomains:
+          type: object
+          additionalProperties:
+            type: string
+          description: Errors by domains
+          nullable: true
+        subject:
+          $ref: '#/components/schemas/SubjectSectionData'
+        target:
+          $ref: '#/components/schemas/TargetSectionData'
+        subjects:
+          type: array
+          items:
+            type: string
+          description: List of Subjects referenced by their Delinea Resource Name
+          nullable: true
+        targets:
+          type: array
+          items:
+            type: string
+          description: List of Targets referenced by their Delinea Resource Name
+          nullable: true
+        rego:
+          $ref: '#/components/schemas/RegoSectionData'
+        updated:
+          type: string
+          description: Updated date.
+          format: date-time
+          nullable: true
+        deleted:
+          type: string
+          description: Deletion date.
+          format: date-time
+          nullable: true
+        audit:
+          $ref: '#/components/schemas/AuditSectionData'
+      additionalProperties: false
+      description: The policy
+    PolicyCreatedPayload:
+      required:
+        - actionId
+        - libraryId
+        - name
+        - rego
+      type: object
+      properties:
+        libraryId:
+          type: string
+          description: Policy library id.
+          format: uuid
+        name:
+          minLength: 1
+          type: string
+          description: Name.
+        description:
+          type: string
+          description: Description
+          nullable: true
+        libraryName:
+          type: string
+          description: Library name
+          nullable: true
+        status:
+          $ref: '#/components/schemas/PolicyStatus'
+        level:
+          $ref: '#/components/schemas/Owner'
+        labels:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: Labels/categories of this policy. E.g. SOC 2, Delinea etc.
+          nullable: true
+        actionId:
+          minLength: 1
+          type: string
+          description: Action/event id, that this policy should be applied to
+        rego:
+          $ref: '#/components/schemas/RegoSectionData'
+        subject:
+          $ref: '#/components/schemas/SubjectSectionData'
+        target:
+          $ref: '#/components/schemas/TargetSectionData'
+        subjects:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: List of Subjects referenced by their Delinea Resource Name
+          nullable: true
+        targets:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: List of Targets referenced by their Delinea Resource Name
+          nullable: true
+        actions:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: Action/event id, that this policy should be applied to
+          nullable: true
+      additionalProperties: false
+      description: Policy created
+    PolicyDeploymentState:
+      enum:
+        - Active
+        - Inactive
+        - Activating
+        - Deactivating
+        - ActivationFailed
+        - DeactivationFailed
+      type: string
+      description: Policy overall state
+    PolicyEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Event id
+          format: uuid
+        policyId:
+          type: string
+          description: Policy id
+          format: uuid
+        eventType:
+          type: string
+          description: >-
+            Type of the event, that happened with the policy. E.g.
+            PolicyCreated, SubjectChanged etc.
+          nullable: true
+        payload:
+          type: string
+          description: Event payload serialized to json
+          nullable: true
+        created:
+          type: string
+          description: Date of creation.
+          format: date-time
+          nullable: true
+        deleted:
+          type: string
+          description: Date of deletion.
+          format: date-time
+          nullable: true
+        identity:
+          $ref: '#/components/schemas/IdentityInfo'
+      additionalProperties: false
+      description: Policy event
+    PolicyForSubject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        libraryId:
+          type: string
+          description: LibraryId
+          format: uuid
+        libraryName:
+          type: string
+          description: LibraryName
+          nullable: true
+        name:
+          type: string
+          description: PolicyName
+          nullable: true
+        actionId:
+          type: string
+          description: Action Id
+          nullable: true
+      additionalProperties: false
+      description: Policy for Subject DTO
+    PolicyIdSubjectActionTarget:
+      required:
+        - action
+        - id
+        - subjects
+        - targets
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id
+          format: uuid
+        subjects:
+          type: array
+          items:
+            type: string
+          description: Subjects in DRN format
+        action:
+          minLength: 1
+          type: string
+          description: Action
+        targets:
+          type: array
+          items:
+            type: string
+          description: Target in DRN format
+      additionalProperties: false
+      description: The policy
+    PolicyLibrary:
+      required:
+        - actionId
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          format: uuid
+        actionId:
+          minLength: 1
+          type: string
+          description: Type of action, that can be used in the policy
+        sectionConfiguration:
+          $ref: '#/components/schemas/PolicyLibrarySectionConfiguration'
+        name:
+          minLength: 1
+          type: string
+          description: Name
+        description:
+          type: string
+          description: Description
+          nullable: true
+        labels:
+          type: array
+          items:
+            type: string
+          description: Labels/categories of this library. E.g. SOC 2, Delinea etc.
+          nullable: true
+        deleted:
+          type: string
+          description: Deletion date.
+          format: date-time
+          nullable: true
+        level:
+          $ref: '#/components/schemas/Owner'
+        isAutoAssigned:
+          type: boolean
+          description: >-
+            Specifies whether a policy should be automatically created based on
+            this template
+
+            when a new tenant is created
+      additionalProperties: false
+      description: Policy library
+    PolicyLibrarySectionConfiguration:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ActionSectionConfiguration'
+        subject:
+          $ref: '#/components/schemas/SubjectSectionConfiguration'
+        target:
+          $ref: '#/components/schemas/TargetSectionConfiguration'
+        condition:
+          $ref: '#/components/schemas/ConditionSectionConfiguration'
+        rule:
+          $ref: '#/components/schemas/RuleSectionConfiguration'
+      additionalProperties: false
+      description: Policy section availability
+    PolicyStatus:
+      enum:
+        - Active
+        - Disabled
+      type: string
+      description: Policy status
+    PolicyUnitAvailability:
+      enum:
+        - Optional
+        - Required
+        - Disabled
+        - Hidden
+      type: string
+      description: Policy unit availability
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: {}
+    RegoSectionData:
+      type: object
+      properties:
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionObject'
+          description: Conditions
+          nullable: true
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleObject'
+          description: Rules
+          nullable: true
+      additionalProperties: false
+      description: Policy rego section. E.g. condition, rule etc.
+    RequestExecutionStatus:
+      enum:
+        - Started
+        - Completed
+        - Failed
+      type: string
+      description: Status of the executed request.
+    RuleCategory:
+      enum:
+        - Mfa
+        - General
+        - Audit
+        - Other
+        - AccessMode
+      type: string
+      description: Rule category. E.g. Mfa, approval etc.
+    RuleLibrary:
+      required:
+        - externalId
+        - id
+        - jsonSchema
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          format: uuid
+        externalId:
+          minLength: 1
+          type: string
+          description: Id, that can be used to map db record to wasm in blob
+        content:
+          type: string
+          description: Rego content of the library
+          nullable: true
+        jsonSchema:
+          minLength: 1
+          type: string
+          description: Json schema of data, that is required for rego
+        name:
+          minLength: 1
+          type: string
+          description: Name
+        description:
+          type: string
+          description: Description
+          nullable: true
+        labels:
+          type: array
+          items:
+            type: string
+          description: Labels/categories of this library. E.g. SOC 2, Delinea etc.
+          nullable: true
+        deleted:
+          type: string
+          description: Deletion date.
+          format: date-time
+          nullable: true
+        level:
+          $ref: '#/components/schemas/Owner'
+        isExclusive:
+          type: boolean
+          description: >-
+            Determines if this rule is exclusive inside its category.
+
+            If it is selected, no other rules from the same category can be
+            selected for the policy.
+        category:
+          $ref: '#/components/schemas/RuleCategory'
+      additionalProperties: false
+      description: Rule library
+    RuleObject:
+      required:
+        - regoLibraryId
+      type: object
+      properties:
+        regoLibraryId:
+          type: string
+          description: Rego library id
+          format: uuid
+        data:
+          type: string
+          description: >-
+            Serialized json data, entered by user during policy creation, that
+            should be passed to OPA engine
+          nullable: true
+        regoLibrary:
+          $ref: '#/components/schemas/RuleLibrary'
+      additionalProperties: false
+      description: OPA rule reference with data
+    RuleOption:
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/RuleCategory'
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+      additionalProperties: false
+      description: Rule option
+    RuleSectionConfiguration:
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+        minItems:
+          type: integer
+          description: Minimum amount of items, that must be selected
+          format: int32
+          nullable: true
+        maxItems:
+          type: integer
+          description: Maximum amount of items, that must be selected
+          format: int32
+          nullable: true
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleOption'
+          description: Options
+          nullable: true
+        areExtraOptionsAllowed:
+          type: boolean
+          description: >-
+            Whether extra options are allowed or not.
+
+            If true - all options, that aren't specified as forbidden are
+            allowed.
+
+            If false - only specified options are allowed.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValuesSectionData'
+          description: Default values
+          nullable: true
+      additionalProperties: false
+      description: Rule section configuration
+    SieveModel:
+      type: object
+      properties:
+        filters:
+          type: string
+          nullable: true
+        sorts:
+          type: string
+          nullable: true
+        page:
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+          format: int32
+          nullable: true
+        pageSize:
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+    StartRequestProcessingView:
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: Id of the executed operation
+          nullable: true
+        status:
+          $ref: '#/components/schemas/RequestExecutionStatus'
+      additionalProperties: false
+      description: Submit request for the execution
+    Subject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ''
+          format: uuid
+        name:
+          type: string
+          description: ''
+          nullable: true
+        domain:
+          type: string
+          description: ''
+          nullable: true
+        type:
+          type: string
+          description: ''
+          nullable: true
+        subtype:
+          type: string
+          description: ''
+          nullable: true
+        containingGroupIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Groups this subject belongs to
+          nullable: true
+      additionalProperties: false
+      description: Policy subject Dto
+    SubjectCategory:
+      enum:
+        - Unknown
+        - User
+        - Group
+        - ServiceAccount
+        - DelineaAppAccount
+        - WebSiteLogin
+        - ActiveDirectory
+        - Role
+        - DiscoveryListener
+        - DirectoryGroup
+        - XpmGroup
+        - UserGroup
+        - ActiveDirectoryUser
+        - ActiveDirectoryGroup
+        - DelineaPlatformUser
+        - DelineaPlatformGroup
+        - DelineaPlatformServiceAccount
+        - AzureUser
+        - AzureGroup
+        - AzureServicePrincipal
+        - AzureApplication
+        - AzureDevice
+        - AzureOrgContact
+      type: string
+      description: Type of subjects, that can be used in the policy
+    SubjectGroupsAddedPayload:
+      required:
+        - subjectIds
+      type: object
+      properties:
+        subjectIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Subject Ids
+      additionalProperties: false
+      description: Subject groups added.
+    SubjectOption:
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/SubjectCategory'
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+      additionalProperties: false
+      description: Target configuration default items
+    SubjectSectionConfiguration:
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+        minItems:
+          type: integer
+          description: Minimum amount of items, that must be selected
+          format: int32
+          nullable: true
+        maxItems:
+          type: integer
+          description: Maximum amount of items, that must be selected
+          format: int32
+          nullable: true
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubjectOption'
+          description: Options
+          nullable: true
+        areExtraOptionsAllowed:
+          type: boolean
+          description: >-
+            Whether extra options are allowed or not.
+
+            If true - all options, that aren't specified as forbidden are
+            allowed.
+
+            If false - only specified options are allowed.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValuesSectionData'
+          description: Default values
+          nullable: true
+      additionalProperties: false
+      description: Subject section configuration
+    SubjectSectionData:
+      type: object
+      properties:
+        userIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Subject users ids
+          nullable: true
+        groupIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Subject groups ids
+          nullable: true
+        users:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+          description: Subject users
+          nullable: true
+        groups:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+          description: Subject groups
+          nullable: true
+      additionalProperties: false
+      description: Policy subject section. E.g. user, group etc.
+    SubjectUsersAddedPayload:
+      required:
+        - subjectIds
+      type: object
+      properties:
+        subjectIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Subject Ids
+      additionalProperties: false
+      description: Subject users added.
+    SubjectWithPolicies:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ''
+          format: uuid
+        name:
+          type: string
+          description: ''
+          nullable: true
+        domain:
+          type: string
+          description: ''
+          nullable: true
+        type:
+          type: string
+          description: ''
+          nullable: true
+        subtype:
+          type: string
+          description: ''
+          nullable: true
+        containingGroupIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Groups this subject belongs to
+          nullable: true
+        policies:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyForSubject'
+          description: Policies
+          nullable: true
+      additionalProperties: false
+      description: Subject with policies DTO
+    Target:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ''
+          nullable: true
+        name:
+          type: string
+          description: ''
+          nullable: true
+        type:
+          type: string
+          description: ''
+          nullable: true
+        inventoryId:
+          type: string
+          description: Id inside inventory DB
+          format: uuid
+          nullable: true
+        status:
+          $ref: '#/components/schemas/TargetStatus'
+        notEnforcedReason:
+          type: string
+          description: Reason of why Target is not enforced
+          nullable: true
+      additionalProperties: false
+      description: Policy target Dto
+    TargetCategory:
+      enum:
+        - Workstation
+        - Server
+        - Collection
+      type: string
+      description: Type of targets, that can be used in the policy
+    TargetGroupsAddedPayload:
+      required:
+        - targetIds
+      type: object
+      properties:
+        targetIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: TargetId Id
+      additionalProperties: false
+      description: Target groups added.
+    TargetInstancesAddedPayload:
+      required:
+        - targetIds
+      type: object
+      properties:
+        targetIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: TargetId Id
+      additionalProperties: false
+      description: Target instances added.
+    TargetOption:
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/TargetCategory'
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+      additionalProperties: false
+      description: Target configuration default items
+    TargetSectionConfiguration:
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/PolicyUnitAvailability'
+        minItems:
+          type: integer
+          description: Minimum amount of items, that must be selected
+          format: int32
+          nullable: true
+        maxItems:
+          type: integer
+          description: Maximum amount of items, that must be selected
+          format: int32
+          nullable: true
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetOption'
+          description: Options
+          nullable: true
+        areExtraOptionsAllowed:
+          type: boolean
+          description: >-
+            Whether extra options are allowed or not.
+
+            If true - all options, that aren't specified as forbidden are
+            allowed.
+
+            If false - only specified options are allowed.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValuesSectionData'
+          description: Default values
+          nullable: true
+      additionalProperties: false
+      description: Target section configuration
+    TargetSectionData:
+      type: object
+      properties:
+        instanceIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: Target instances ids
+          nullable: true
+        groupIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: Target groups ids
+          nullable: true
+        instances:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Instance'
+          description: Target instances
+          nullable: true
+        groups:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          description: Target groups
+          nullable: true
+      additionalProperties: false
+      description: Policy target section. E.g. instance, group etc.
+    TargetStatus:
+      enum:
+        - Enforced
+        - NotEnforced
+        - NotSupported
+        - PartiallyEnforced
+      type: string
+      description: Target status
+    UpdateCommandModel:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        operatingSystem:
+          $ref: '#/components/schemas/OperatingSystem'
+        expressionType:
+          $ref: '#/components/schemas/ExpressionType'
+        matchPathType:
+          $ref: '#/components/schemas/CommandMatchPath'
+        matchPaths:
+          type: array
+          items:
+            type: string
+          nullable: true
+        runAsType:
+          $ref: '#/components/schemas/CommandRunAs'
+        runAs:
+          type: string
+          nullable: true
+        application:
+          type: string
+          nullable: true
+        argument:
+          type: string
+          nullable: true
+        groups:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+      additionalProperties: false
+      description: >-
+        Creates a new user command that can be added to the group later which
+        allows it to be used in a policy
+    ValidationProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          nullable: true
+      additionalProperties: {}
+    ValuesSectionData:
+      type: object
+      properties:
+        drn:
+          type: string
+          description: ''
+          nullable: true
+        displayName:
+          type: string
+          description: ''
+          nullable: true
+        data:
+          type: string
+          description: Serialized default json data, that is used in UI
+          nullable: true
+      additionalProperties: false
+      description: Default object values
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Please enter a valid token
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - Bearer: []
+servers:
+  - url: https://{tenantHostname}.delinea.app/policy-services
+    variables:
+      tenantHostname:
+        default: tenantHostname
+        description: Use your proper platform tenant hostname.
